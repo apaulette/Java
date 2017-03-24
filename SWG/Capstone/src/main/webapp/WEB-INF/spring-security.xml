@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- #1 - Make security the default namespace -->
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+ http://www.springframework.org/schema/security
+ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+    <!-- Expression Handler bean definition START -->
+    <beans:bean id="webexpressionHandler"
+                class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"/>
+    <!-- Expression Handler bean definition END -->
+
+    <!-- PASSWORD ENCODER BEAN CHANGES START -->
+    <beans:bean id="encoder"
+                class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+    <!-- PASSWORD ENCODER BEAN CHANGES END -->
+    
+    <!-- #2 - Make sure we don't need authorization to get to the login or home page -->
+    <http pattern="/login" security="none" />
+    <http pattern="/css/**" security="none" />
+    <http pattern="/js/**" security="none" />
+    <http pattern="/img/**" security="none" />
+    <http pattern="/postStaticPage" security="none" />      
+     
+    <!-- #3 - Authentication/login form and protected endpoint configuration -->
+    <http auto-config="true" use-expressions="false">
+        <!-- #3a - Login via html form, use Spring to do the security check -->
+        <!-- #3b - Use the login page at this endpoint -->
+        <!-- #3c - Redirect here if login fails -->
+        <form-login login-processing-url="/j_spring_security_check"
+                    login-page="/login"
+                    authentication-failure-url="/login?login_error=1"/>
+        <!-- #3d - Go back to home page when user logs out -->
+        <logout logout-success-url="/home" />
+        <!-- #3e - Access to these endpoints require admin role -->
+        <!-- Multiple roles are allowed - the access list is comma-delimited -->
+        <intercept-url pattern="/home" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <intercept-url pattern="/" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <intercept-url pattern="/staticPage/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <intercept-url pattern="/displaySubmittedBlogPost/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <intercept-url pattern="/displayCreateBlogPost" access="ROLE_MODERATOR, ROLE_ADMIN" />
+        <intercept-url pattern="/createBlogPost" access="ROLE_MODERATOR, ROLE_ADMIN" />
+        <intercept-url pattern="/confirmBlogPost" access="ROLE_MODERATOR, ROLE_ADMIN" />
+        <intercept-url pattern="/deleteSubmittedBlogPost" access="ROLE_ADMIN" />
+        <intercept-url pattern="/displayEditBlogPost" access="ROLE_MODERATOR, ROLE_ADMIN" />
+        <intercept-url pattern="/createStaticPage" access="ROLE_MODERATOR, ROLE_ADMIN" />
+        <intercept-url pattern="/confirmEditBlogPost" access="ROLE_MODERATOR, ROLE_ADMIN" />
+        <intercept-url pattern="/pendingApproval" access="ROLE_MODERATOR, ROLE_ADMIN" />
+        <intercept-url pattern="/approveStaticPage" access="ROLE_ADMIN" />
+        <intercept-url pattern="/staticPage/approveStaticPage" access="ROLE_ADMIN" />
+        <intercept-url pattern="/unapproveStaticPage" access="ROLE_ADMIN" />
+        <intercept-url pattern="/staticPage/unapproveStaticPage" access="ROLE_ADMIN" /> 
+        <intercept-url pattern="/editStaticPage" access="ROLE_MODERATOR, ROLE_ADMIN" />
+        <intercept-url pattern="/staticPage/editStaticPage" access="ROLE_MODERATOR, ROLE_ADMIN" /> 
+        <intercept-url pattern="/confirmEditStaticPage" access="ROLE_MODERATOR, ROLE_ADMIN" />
+        <intercept-url pattern="/staticPage/confirmEditStaticPage" access="ROLE_MODERATOR, ROLE_ADMIN" />
+        <intercept-url pattern="/deleteStaticPager" access="ROLE_ADMIN" />
+        <intercept-url pattern="/staticPage/deleteStaticPage" access="ROLE_ADMIN" />
+        <intercept-url pattern="/deleteUser" access="ROLE_ADMIN" />
+        <intercept-url pattern="/addUser" access="ROLE_ADMIN" /> 
+        <intercept-url pattern="/portalHome" access="ROLE_MODERATOR" />
+         
+    </http>
+    <!-- #4 - Authentication Manager config -->
+    <authentication-manager>
+        <!-- #4a - Authentication Provider - we’re using the JDBC service -->
+        <authentication-provider>
+            <!-- AUTHENTICATION-PROVIDER CHANGES START -->
+            <password-encoder ref="encoder"/>
+            <!-- AUTHENTICATION-PROVIDER CHANGES END -->
+            <!-- #4b - Tells Spring Security where to look for user information -->
+            <!-- We use the dataSource defined in spring-persistence.xml -->
+            <!-- and we give Spring Security the query to use to lookup -->
+            <!-- the user’s credentials (get the password from the users -->
+            <!-- tables and get the roles from the authorities table) -->
+            <jdbc-user-service id="userService"
+                               data-source-ref="dataSource"
+                               users-by-username-query=
+ "select username, password, enabled from user where username = ?"
+                               authorities-by-username-query=
+ "select username, authority from authorities where username = ?" />
+        </authentication-provider>
+    </authentication-manager>
+</beans:beans>

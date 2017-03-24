@@ -1,0 +1,87 @@
+CREATE DATABASE capstone_test;
+
+GRANT USAGE ON *.* TO cookie@localhost IDENTIFIED BY 'monstar';
+
+GRANT ALL PRIVILEGES ON capstone.* TO cookie@localhost; 
+
+USE capstone_test;
+
+CREATE TABLE IF NOT EXISTS blogPost
+(blogPostId INT NOT NULL auto_increment,
+`date` datetime NOT NULL,
+`title` varchar(50) NOT NULL,
+`imagePath` varchar(300),
+`blogText` varchar(8000),
+`isApproved` boolean NOT NULL,
+PRIMARY KEY (blogPostId)) ;  
+
+CREATE TABLE IF NOT EXISTS categories
+(categoryId INT NOT NULL auto_increment,
+`name` varchar(50) NOT NULL,
+Primary KEY (categoryId));
+
+CREATE TABLE IF NOT EXISTS tags
+(tagId INT NOT NULL auto_increment,
+`name` varchar(50) NOT NULL,
+Primary KEY (tagId));
+
+CREATE TABLE IF NOT EXISTS comments
+(commentId INT NOT NULL auto_increment,
+userId INT NOT NULL,
+`commentText` TEXT(400) NOT NULL,
+`commentDate` date NOT NULL,
+Primary Key(commentId),
+Key (userId));
+
+CREATE TABLE IF NOT EXISTS `user` (
+`userId` INT NOT NULL auto_increment,
+`username` varchar(50) NOT NULL,
+`password` varchar(100) NOT NULL,
+`enabled` tinyint(1) NOT NULL,
+Primary Key(userId),
+KEY `username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=3;
+
+CREATE TABLE IF NOT EXISTS `authorities` (
+`username` varchar(50) NOT NULL,
+`authority` varchar(50) NOT NULL,
+KEY `username`(`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+ALTER TABLE `authorities`
+ADD CONSTRAINT `authorities_ibfk_1` FOREIGN KEY (`username`) REFERENCES `user` (`username`);
+
+INSERT INTO `user` (`userId`, `username`, `password`, `enabled`) VALUES (1, 'admin', '$2a$10$VbfEiyc6LwJgVcMcuonrAOY9d2L.uDnpkyzCTCFao29ldTokQV/vm',1);
+INSERT INTO `user` (`userId`, `username`, `password`, `enabled`) VALUES (2, 'moderator', '$2a$10$Fwy1iCHXKEMsITkPKfcSbuuh8AiUR0soHdQnxWhj5wBoH0ngBHjOO',1);
+
+INSERT INTO `authorities` (`username`, `authority`) VALUES
+('admin', 'ROLE_ADMIN'),
+('admin', 'ROLE_MODERATOR'),
+('moderator', 'ROLE_MODERATOR');
+
+CREATE TABLE IF NOT EXISTS `blogPost_categories`
+(blogPostId INT NOT NULL,
+categoryId INT NOT NULL,
+key(blogPostId),
+key(categoryId));
+
+CREATE TABLE IF NOT EXISTS `blogPost_tags`
+(blogPostId Int NOT NULL,
+tagId INT NOT NULL,
+key(blogPostId),
+key(tagId));
+
+CREATE TABLE IF NOT EXISTS `blogPost_comments`
+(blogPostId INT NOT NULL,
+commentId INT NOT NULL,
+key(blogPostId),
+key(commentId));
+
+CREATE TABLE IF NOT EXISTS `staticPage`
+(staticPageId INT NOT NULL auto_increment,
+`title` varchar(80) NOT NULL,
+`imagePath` varchar(300),
+`staticPageText` TEXT,
+`isApproved` boolean NOT NULL,
+`displayOrder` INT,
+PRIMARY KEY (staticPageId)); 
