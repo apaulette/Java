@@ -45,7 +45,6 @@
                     </ul>
                 </div>
             </div>
-        </div>
         <div class="row content">
             <div class="col-md-2"></div>
             <div class="col-md-4">
@@ -111,6 +110,7 @@
             <div class="container"><p>Created by Amanda Paulette | 2016<br>
                     Powered by Java and Bootstrap</p></div>
         </footer>
+        </div>
         <script src="${pageContext.request.contextPath}/js/jquery-2.2.4.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/js/custom/unitConverterSelector.js"></script>
