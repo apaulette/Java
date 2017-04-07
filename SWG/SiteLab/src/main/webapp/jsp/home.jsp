@@ -18,18 +18,20 @@
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/icon.png">
     </head>
     <body>
-        <div class="container-fixed">
+        <div class="container-fluid">
             <div class="row clearfix" id="sitelabHeader">
-                <div class="col-xs-12"><div id="pic"><img src="img/logo_swg.png" class="img-responsive"></div><div id="title">Software Craftsmanship Guild Java Cohort<br>
-                        <span class="subhead">JSP Site Lab</span></div></div>
+                <div class="col-xs-12"><div id="pic"><img src="img/logo_swg.png" class="img-responsive"></div>
+                    <div id="title">Software Craftsmanship Guild Java Cohort<br>
+                    <span class="subhead">JSP Site Lab</span></div>
+                </div>
             </div>
-            <div id="custom-bootstrap-menu" class="navbar navbar-default" role="navigation">
-                <div class="container-fluid">
+        </div>
+        <div id="custom-bootstrap-menu" class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-menubuilder">
                         <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                     </button>
                 </div>
                 <div class="collapse navbar-collapse navbar-menubuilder">
@@ -44,25 +46,27 @@
                     </ul>
                 </div>
             </div>
-        <div class="row content">
-            <div class="col-xs-2 col-sm-3 col-md-1"></div>
-            <div class="col-xs-8 col-sm-6 col-md-10">
-                <div class="row">
-                    <div class="col-xs-6 col-sm-4 col-md-2 sitelab-home"><a href="${pageContext.request.contextPath}/luckySevens"><img src="${pageContext.request.contextPath}/img/sitelab_luckySevens.jpg" class="img-responsive" border="0"></a><p>Lucky Sevens</p></div>
-                    <div class="col-xs-6 col-sm-4 col-md-2 sitelab-home"><a href="${pageContext.request.contextPath}/factorizer"><img src="${pageContext.request.contextPath}/img/sitelab_factorizer.jpg" class="img-responsive" border="0"></a><p>Factorizer</p></div>
-                    <div class="col-xs-6 col-sm-4 col-md-2 sitelab-home"><a href="${pageContext.request.contextPath}/interestCalculator"><img src="${pageContext.request.contextPath}/img/sitelab_interestCalculator.jpg" class="img-responsive" border="0"></a><p>Interest Calculator</p></div>
-                    <div class="col-xs-6 col-sm-4 col-md-2 sitelab-home"><a href="${pageContext.request.contextPath}/flooringCalculator"><img src="${pageContext.request.contextPath}/img/sitelab_flooringCalculator.jpg" class="img-responsive" border="0"></a><p>Flooring Calculator</p></div>
-                    <div class="col-xs-6 col-sm-4 col-md-2 sitelab-home"><a href="${pageContext.request.contextPath}/tipCalculator"><img src="${pageContext.request.contextPath}/img/sitelab_tipCalculator.jpg" class="img-responsive" border="0"></a><p>Tip Calculator</p></div>
-                    <div class="col-xs-6 col-sm-4 col-md-2 sitelab-home"><a href="${pageContext.request.contextPath}/unitConverter"><img src="${pageContext.request.contextPath}/img/sitelab_unitConverter.jpg" class="img-responsive" border="0"></a><p>Unit Converter</p></div>
+        </div>
+        <div class="container-fluid">
+            <div class="row content">
+                <div class="col-xs-2 col-sm-3 col-md-1"></div>
+                <div class="col-xs-8 col-sm-6 col-md-10">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-4 col-md-2 sitelab-home"><a href="${pageContext.request.contextPath}/luckySevens"><img src="${pageContext.request.contextPath}/img/sitelab_luckySevens.jpg" class="img-responsive" border="0"></a><p>Lucky Sevens</p></div>
+                        <div class="col-xs-6 col-sm-4 col-md-2 sitelab-home"><a href="${pageContext.request.contextPath}/factorizer"><img src="${pageContext.request.contextPath}/img/sitelab_factorizer.jpg" class="img-responsive" border="0"></a><p>Factorizer</p></div>
+                        <div class="col-xs-6 col-sm-4 col-md-2 sitelab-home"><a href="${pageContext.request.contextPath}/interestCalculator"><img src="${pageContext.request.contextPath}/img/sitelab_interestCalculator.jpg" class="img-responsive" border="0"></a><p>Interest Calculator</p></div>
+                        <div class="col-xs-6 col-sm-4 col-md-2 sitelab-home"><a href="${pageContext.request.contextPath}/flooringCalculator"><img src="${pageContext.request.contextPath}/img/sitelab_flooringCalculator.jpg" class="img-responsive" border="0"></a><p>Flooring Calculator</p></div>
+                        <div class="col-xs-6 col-sm-4 col-md-2 sitelab-home"><a href="${pageContext.request.contextPath}/tipCalculator"><img src="${pageContext.request.contextPath}/img/sitelab_tipCalculator.jpg" class="img-responsive" border="0"></a><p>Tip Calculator</p></div>
+                        <div class="col-xs-6 col-sm-4 col-md-2 sitelab-home"><a href="${pageContext.request.contextPath}/unitConverter"><img src="${pageContext.request.contextPath}/img/sitelab_unitConverter.jpg" class="img-responsive" border="0"></a><p>Unit Converter</p></div>
+                    </div>
                 </div>
+                <div class="col-xs-2 col-sm-3 col-md-1"></div>
             </div>
-            <div class="col-xs-2 col-sm-3 col-md-1"></div>
         </div>
         <footer class="footer">
             <div class="container"><p>Created by Amanda Paulette | 2016<br>
                     Powered by Java and Bootstrap</p></div>
         </footer>
-        </div>
         <script src="${pageContext.request.contextPath}/js/jquery-2.2.4.min.js"></script>
         <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
